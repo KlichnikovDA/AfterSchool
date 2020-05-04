@@ -406,7 +406,7 @@ namespace AfterSchool
         }
 
         // Добавить запись о проведенном занятии
-        public static long WritePeriod(string ActName, string GroupName, DateTime Date, string Begin, int Dur, string Comm)
+        public static long WritePeriod(int Edu, string ActName, string GroupName, DateTime Date, string Begin, int Dur, string Comm)
         {
             DBConn.Open();
 
@@ -415,10 +415,11 @@ namespace AfterSchool
             SQLiteTransaction DBTrans = DBConn.BeginTransaction();
 
             DBComm.CommandText =
-                  @"INSERT INTO Period (GroupID, ActivityID, Date, TimeBegin, Duration, WorkDone)
-                    VALUES ((SELECT ID FROM 'Group' WHERE Name == @GN),
+                  @"INSERT INTO Period (EduID, GroupID, ActivityID, Date, TimeBegin, Duration, WorkDone)
+                    VALUES (@EI, (SELECT ID FROM 'Group' WHERE Name == @GN),
                     (SELECT ID FROM Activity WHERE Name = @AN),
                     @DT, @BT, @Dur, @TR)";
+            DBComm.Parameters.AddWithValue("@EI", Edu);
             DBComm.Parameters.AddWithValue("@GN", GroupName);
             DBComm.Parameters.AddWithValue("@AN", ActName);
             DBComm.Parameters.AddWithValue("@DT", Date.Date);
@@ -915,6 +916,8 @@ namespace AfterSchool
             DBComm.CommandText = 
                 @"DELETE FROM Employee WHERE AccID IN
                 (SELECT ID FROM Accounts WHERE Login == @Li)";
+            DBComm.Parameters.AddWithValue("@Li", Login);
+            DBComm.ExecuteNonQuery();
             DBComm.CommandText =
                 @"DELETE FROM Employee WHERE AccID IS NULL";
             DBComm.ExecuteNonQuery();

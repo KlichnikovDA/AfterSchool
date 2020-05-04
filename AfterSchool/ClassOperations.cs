@@ -89,7 +89,7 @@ namespace AfterSchool
             {
                 AttendanceInfo.Add(Int32.Parse(AttendanceTable.Rows[i].Cells[3].Value.ToString()), Convert.ToInt32(Convert.ToBoolean(AttendanceTable.Rows[i].Cells[2].Value)));
             }
-            DBOperations.WriteAttendance(DBOperations.WritePeriod(Activity, Group, Date, TimeBegin, Duration, Commentary), AttendanceInfo);
+            DBOperations.WriteAttendance(DBOperations.WritePeriod(CurrentUser, Activity, Group, Date, TimeBegin, Duration, Commentary), AttendanceInfo);
         }
     }
 }

@@ -58,6 +58,7 @@ namespace AfterSchool
 
         public void WriteEmployee(List<string> EmployeeList)
         {
+            dgv_Employee.Rows.Clear();
             foreach (string Emp in EmployeeList)
             {
                 object[] Row = new object[3];
@@ -71,6 +72,7 @@ namespace AfterSchool
         private void bt_Delete_Click(object sender, EventArgs e)
         {
             EmployeeOperations.RemoveEmp(dgv_Employee.CurrentRow.Cells[2].Value.ToString());
+            EmployeeOperations.FillForm(this);
         }
 
         private void bt_Add_Click(object sender, EventArgs e)
@@ -78,7 +80,10 @@ namespace AfterSchool
             if (tb_FIO.Text != "" && tb_Phone.Text != "" && tb_Email.Text != "" && cb_Position.SelectedItem != null && tb_Login.Text != "" && tb_Password.Text != "")
             {
                 if (EmployeeOperations.CheckLogin(tb_Login.Text))
+                {
                     EmployeeOperations.AddNewEmp(tb_FIO.Text, tb_Phone.Text, tb_Email.Text, cb_Position.Text, tb_Login.Text, tb_Password.Text, cb_Position.SelectedIndex);
+                    EmployeeOperations.FillForm(this);
+                }
                 else
                     MessageBox.Show("Пользователь с таким логином уже зарегистрирован в системе");
             }
