@@ -1,0 +1,156 @@
+BEGIN TRANSACTION;
+CREATE TABLE IF NOT EXISTS "Group" (
+	"ID"	INTEGER,
+	"EduID"	INTEGER NOT NULL,
+	"Name"	TEXT NOT NULL,
+	PRIMARY KEY("ID"),
+	FOREIGN KEY("EduID") REFERENCES "Employee"("ID") ON DELETE SET NULL
+);
+CREATE TABLE IF NOT EXISTS "Accounts" (
+	"ID"	INTEGER,
+	"Login"	TEXT NOT NULL UNIQUE,
+	"Password"	TEXT NOT NULL,
+	"Category"	INTEGER NOT NULL,
+	PRIMARY KEY("ID")
+);
+CREATE TABLE IF NOT EXISTS "ActivityType" (
+	"ID"	INTEGER,
+	"TypeName"	TEXT NOT NULL,
+	PRIMARY KEY("ID")
+);
+CREATE TABLE IF NOT EXISTS "Activity" (
+	"ID"	INTEGER,
+	"EduID"	INTEGER,
+	"TypeID"	INTEGER NOT NULL,
+	"Name"	TEXT NOT NULL,
+	PRIMARY KEY("ID"),
+	FOREIGN KEY("EduID") REFERENCES "Employee"("ID") ON DELETE SET NULL
+);
+CREATE TABLE IF NOT EXISTS "Parent" (
+	"ID"	INTEGER,
+	"Name"	TEXT NOT NULL,
+	"Phone"	TEXT NOT NULL,
+	"Email"	TEXT,
+	"HasPaid"	INTEGER NOT NULL,
+	PRIMARY KEY("ID")
+);
+CREATE TABLE IF NOT EXISTS "Period" (
+	"ID"	INTEGER,
+	"GroupID"	INTEGER NOT NULL,
+	"ActivityID"	INTEGER NOT NULL,
+	"Date"	TEXT NOT NULL,
+	"TimeBegin"	TEXT NOT NULL,
+	"Duration"	INTEGER NOT NULL,
+	"WorkDone"	TEXT,
+	PRIMARY KEY("ID"),
+	FOREIGN KEY("ActivityID") REFERENCES "Activity"("ID") ON DELETE SET NULL,
+	FOREIGN KEY("GroupID") REFERENCES "Group"("ID") ON DELETE SET NULL
+);
+CREATE TABLE IF NOT EXISTS "Employee" (
+	"ID"	INTEGER,
+	"AccID"	INTEGER NOT NULL,
+	"Name"	TEXT NOT NULL,
+	"Position"	TEXT NOT NULL,
+	"Email"	TEXT,
+	"Phone"	TEXT,
+	PRIMARY KEY("ID"),
+	FOREIGN KEY("AccID") REFERENCES "Accounts"("ID") ON DELETE SET NULL
+);
+CREATE TABLE IF NOT EXISTS "Child" (
+	"ID"	INTEGER,
+	"GroupID"	INTEGER NOT NULL,
+	"Name"	TEXT NOT NULL,
+	"Grade"	TEXT NOT NULL,
+	"Birthdate"	TEXT NOT NULL,
+	"Address"	TEXT NOT NULL,
+	"Privilege"	INTEGER,
+	PRIMARY KEY("ID"),
+	FOREIGN KEY("GroupID") REFERENCES "Group"("ID") ON DELETE SET NULL
+);
+CREATE TABLE IF NOT EXISTS "Attendance" (
+	"ID"	INTEGER,
+	"PeriodID"	INTEGER NOT NULL,
+	"ChildID"	INTEGER NOT NULL,
+	"HasAttended"	INTEGER NOT NULL,
+	PRIMARY KEY("ID"),
+	FOREIGN KEY("PeriodID") REFERENCES "Period"("ID") ON DELETE SET NULL,
+	FOREIGN KEY("ChildID") REFERENCES "Child"("ID") ON DELETE SET NULL
+);
+CREATE TABLE IF NOT EXISTS "Parent_Child" (
+	"ID"	INTEGER,
+	"ParentID"	INTEGER NOT NULL,
+	"ChildID"	INTEGER NOT NULL,
+	PRIMARY KEY("ID"),
+	FOREIGN KEY("ParentID") REFERENCES "Parent"("ID") ON DELETE SET NULL,
+	FOREIGN KEY("ChildID") REFERENCES "Child"("ID") ON DELETE SET NULL
+);
+INSERT INTO "Group" VALUES (1,2,'Группа 1'),
+ (2,4,'Группа 2');
+INSERT INTO "Accounts" VALUES (1,'miivanova','123456',0),
+ (2,'epromanova','654321',1),
+ (3,'miivanova1','125346',2),
+ (4,'iviliin','152643',1);
+INSERT INTO "ActivityType" VALUES (1,'Прием пищи'),
+ (2,'Отдых'),
+ (3,'Учебная деятельность'),
+ (4,'Внеурочная деятельность'),
+ (5,'Прогулка'),
+ (6,'Сон');
+INSERT INTO "Activity" VALUES (1,NULL,1,'Обед'),
+ (3,NULL,5,'Прогулка'),
+ (4,NULL,2,'Игры'),
+ (5,NULL,3,'Самоподготовка'),
+ (6,3,4,'Кружок рукоделия'),
+ (7,NULL,6,'Сон'),
+ (8,NULL,1,'Полдник'),
+ (9,NULL,4,'Чтение');
+INSERT INTO "Parent" VALUES (1,'Крестьянов Даниил Егорович','7-923-137-33-05',NULL,1),
+ (2,'Крестьянова Мария Федоровна','7-908-445-01-04',NULL,1),
+ (3,'Монахов Семен Васильевич','7-901-319-54-14',NULL,1),
+ (4,'Монахова Екатерина Анатольевна','7-948-021-03-56',NULL,1),
+ (5,'Серебряков Анатолий Иванович','7-921-137-33-05',NULL,1),
+ (6,'Серебрякова Анастасия Захаровна','7-906-082-02-00',NULL,1),
+ (7,'Кузнецова Мария Ивановна','7-901-779-40-25',NULL,1),
+ (8,'Кузнецова Галина Евгеньевна','7-901-708-86-14',NULL,1),
+ (9,'Кузнецов Михаил Дмитриевич','7-950-660-69-38',NULL,1),
+ (10,'Рязанов Иван Васильевич','7-905-464-08-47',NULL,1),
+ (11,'Рязанова Татьяна Никитична','7-960-304-12-57',NULL,1),
+ (12,'Иванова Марина Георгиевна','7-903-138-56-68',NULL,1),
+ (13,'Румянцева Анастасия Дмитриевна','7-921-326-49-74',NULL,1),
+ (14,'Румянцев Сергей Михайлович','7-979-941-45-54',NULL,1),
+ (15,'Романова Елена Павловна','7-978-410-02-32','spacerus99@gmail.com',1),
+ (16,'Романов Павел Петрович','7-940-476-65-51',NULL,1);
+INSERT INTO "Employee" VALUES (1,1,'Иванова Мария Ивановна','Руководитель группы',NULL,NULL),
+ (2,2,'Романова Елена Павловна','Воспитатель','spacerus99@gmail.com','7-978-410-02-32'),
+ (3,3,'Иванова Марина Игоревна','Руководитель кружка',NULL,NULL),
+ (4,4,'Игорь Владимирович Ильин','Воспитатель',NULL,NULL);
+INSERT INTO "Child" VALUES (1,1,'Крестьянов Дмитрий Данилович','1','','',NULL),
+ (2,1,'Монахова Анна Семеновна','1','','',NULL),
+ (3,1,'Серебрякова Анна Анатольевна
+','2','','',NULL),
+ (4,1,'Кузнецова Инна Вячеславовна','1','','',NULL),
+ (5,1,'Кузнецов Владимир Дмитриевич','1','','',NULL),
+ (6,2,'Рязанова Марина Ивановна','3','','',NULL),
+ (7,2,'Иванов Петр Васильевич','3','','',NULL),
+ (8,2,'Румянцев Алексей Сергеевич','3','','',NULL),
+ (9,2,'Романова Валентина Павловна','3','','',NULL),
+ (10,2,'Монахов Петр Семенович ','3','','',NULL);
+INSERT INTO "Parent_Child" VALUES (1,1,1),
+ (2,2,1),
+ (3,3,2),
+ (4,4,2),
+ (5,3,10),
+ (6,4,10),
+ (7,5,3),
+ (8,6,3),
+ (9,7,4),
+ (10,8,5),
+ (11,9,5),
+ (12,10,6),
+ (13,11,6),
+ (14,12,7),
+ (15,13,8),
+ (16,14,8),
+ (17,15,9),
+ (18,16,9);
+COMMIT;

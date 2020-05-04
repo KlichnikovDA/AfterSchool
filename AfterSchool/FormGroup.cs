@@ -119,17 +119,22 @@ namespace AfterSchool
 
         private void bt_AddChild_Click(object sender, EventArgs e)
         {
-            if (textBox1.Text != "" && textBox2.Text != "" && textBox3.Text != "" && textBox5.Text != "" &&
-                ((textBox6.Text != "" && textBox8.Text != "" && textBox10.Text != "") || (textBox7.Text != "" && textBox9.Text != "" && textBox11.Text != "")))
+            if (comboBox1.Items.IndexOf(comboBox1.Text) == -1)
             {
-                int NewID = GroupActivitiesOperations.AddChild(comboBox1.Text, textBox1.Text, textBox2.Text, checkBox1.Checked, textBox3.Text, textBox5.Text);
-                if (textBox6.Text != "" && textBox8.Text != "" && textBox10.Text != "")
-                    GroupActivitiesOperations.AddParent(textBox6.Text, textBox8.Text, textBox10.Text, NewID);
-                if (textBox7.Text != "" && textBox9.Text != "" && textBox11.Text != "")
-                    GroupActivitiesOperations.AddParent(textBox7.Text, textBox9.Text, textBox11.Text, NewID);
+                if (textBox1.Text != "" && textBox2.Text != "" && textBox3.Text != "" && textBox5.Text != "" &&
+                  ((textBox6.Text != "" && textBox8.Text != "" && textBox10.Text != "") || (textBox7.Text != "" && textBox9.Text != "" && textBox11.Text != "")))
+                {
+                    int NewID = GroupActivitiesOperations.AddChild(comboBox1.Text, textBox1.Text, textBox2.Text, checkBox1.Checked, textBox3.Text, textBox5.Text);
+                    if (textBox6.Text != "" && textBox8.Text != "" && textBox10.Text != "")
+                        GroupActivitiesOperations.AddParent(textBox6.Text, textBox8.Text, textBox10.Text, NewID);
+                    if (textBox7.Text != "" && textBox9.Text != "" && textBox11.Text != "")
+                        GroupActivitiesOperations.AddParent(textBox7.Text, textBox9.Text, textBox11.Text, NewID);
+                }
+                else
+                    MessageBox.Show("Введены не все необходимые для регистрации ребенка данные");
             }
             else
-                MessageBox.Show("Введены не все необходимые для регистрации ребенка данные");
+                MessageBox.Show("Не выбрана группа");
         }
 
         private void bt_Assign_Click(object sender, EventArgs e)

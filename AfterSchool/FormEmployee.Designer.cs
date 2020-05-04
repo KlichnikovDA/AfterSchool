@@ -35,6 +35,9 @@
             this.mi_Timetable = new System.Windows.Forms.ToolStripMenuItem();
             this.mi_Finish = new System.Windows.Forms.ToolStripMenuItem();
             this.dgv_Employee = new System.Windows.Forms.DataGridView();
+            this.PositionCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.NameCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.LoginCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label1 = new System.Windows.Forms.Label();
             this.bt_Delete = new System.Windows.Forms.Button();
             this.bt_Generate = new System.Windows.Forms.Button();
@@ -47,9 +50,6 @@
             this.bt_Add = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.cb_Position = new System.Windows.Forms.ComboBox();
-            this.PositionCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.NameCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.LoginCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tb_Phone = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.tb_Email = new System.Windows.Forms.TextBox();
@@ -131,6 +131,26 @@
             this.dgv_Employee.RowHeadersVisible = false;
             this.dgv_Employee.Size = new System.Drawing.Size(800, 699);
             this.dgv_Employee.TabIndex = 1;
+            // 
+            // PositionCol
+            // 
+            this.PositionCol.FillWeight = 3F;
+            this.PositionCol.HeaderText = "Должность";
+            this.PositionCol.Name = "PositionCol";
+            this.PositionCol.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.PositionCol.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // NameCol
+            // 
+            this.NameCol.FillWeight = 3F;
+            this.NameCol.HeaderText = "ФИО";
+            this.NameCol.Name = "NameCol";
+            // 
+            // LoginCol
+            // 
+            this.LoginCol.FillWeight = 2F;
+            this.LoginCol.HeaderText = "Логин";
+            this.LoginCol.Name = "LoginCol";
             // 
             // label1
             // 
@@ -262,26 +282,6 @@
             this.cb_Position.Name = "cb_Position";
             this.cb_Position.Size = new System.Drawing.Size(300, 28);
             this.cb_Position.TabIndex = 37;
-            // 
-            // PositionCol
-            // 
-            this.PositionCol.FillWeight = 3F;
-            this.PositionCol.HeaderText = "Должность";
-            this.PositionCol.Name = "PositionCol";
-            this.PositionCol.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.PositionCol.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // NameCol
-            // 
-            this.NameCol.FillWeight = 3F;
-            this.NameCol.HeaderText = "ФИО";
-            this.NameCol.Name = "NameCol";
-            // 
-            // LoginCol
-            // 
-            this.LoginCol.FillWeight = 2F;
-            this.LoginCol.HeaderText = "Логин";
-            this.LoginCol.Name = "LoginCol";
             // 
             // tb_Phone
             // 

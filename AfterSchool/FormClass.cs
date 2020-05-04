@@ -109,10 +109,15 @@ namespace AfterSchool
 
         private void bt_Apply_Click(object sender, EventArgs e)
         {
-            // Сохранить отчет о проведенном занятии
-            ClassOperations.SendPeriodReport(lb_Activities.SelectedItem.ToString(), tb_GroupName.Text, mc_ClassDate.SelectionStart.Date, tb_TimeBegun.Text, 
-                Int32.Parse(tb_Duration.Text), tb_WorkDone.Text, dgv_Attendance);
-            MessageBox.Show("Отчет о проведенном занятии сохранен.");
+            if (lb_Activities.SelectedItem != null)
+            {
+                // Сохранить отчет о проведенном занятии
+                ClassOperations.SendPeriodReport(lb_Activities.SelectedItem.ToString(), tb_GroupName.Text, mc_ClassDate.SelectionStart.Date, tb_TimeBegun.Text,
+                    Int32.Parse(tb_Duration.Text), tb_WorkDone.Text, dgv_Attendance);
+                MessageBox.Show("Отчет о проведенном занятии сохранен.");
+            }
+            else
+                MessageBox.Show("Не выбрано занятие");
         }
     }
 }
